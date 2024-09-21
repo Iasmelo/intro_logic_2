@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-bR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hora de Codar 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #a4c8f0, #e3f2fd);
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            background-image: url('https://images.unsplash.com/photo-1583421439155-bb70992a3299?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDEwfHxNYXRofGVufDB8fHx8MTY4Mjg1MTM3Mw&ixlib=rb-1.2.1&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #004a87;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        label, select {
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        input, select, button {
+            margin: 10px 0;
+            padding: 12px;
+            width: calc(100% - 24px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+        }
+        input:focus, select:focus, button:focus {
+            border-color: #004a87;
+            outline: none;
+        }
+        button {
+            background-color: #004a87;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #003366;
+        }
+        .resultado {
+            margin-top: 20px;
+            font-weight: bold;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora</h1>
+        <label for="exercicio">Escolha um cálculo:</label>
+        <select id="exercicio">
+            <option value="">Selecione...</option>
+            <option value="1">Valor positivo, negativo ou zero</option>
+            <option value="2">Maior de 3 valores</option>
+            <option value="3">Soma dos 2 maiores de 3 valores</option>
+            <option value="4">Média de 6 valores</option>
+            <option value="5">Primeiro, último e maior de 4 valores</option>
+            <option value="6">Soma de números < 72</option>
+            <option value="7">Média de números entre 0 e 10</option>
+            <option value="8">Pode votar?</option>
+            <option value="9">Peso ideal</option>
+            <option value="10">Micro calculadora</option>
+        </select>
+
+        <div id="inputs"></div>
+        <button onclick="calcular()">Calcular</button>
+        <div class="resultado" id="resultado"></div>
+    </div>
+
+    <footer>
+        &copy; 2024 Iasmym Melo
+    </footer>
+
+    <script>
+        function calcular() {
+            const exercicio = document.getElementById('exercicio').value;
+            let resultado = '';
+
+            switch (exercicio) {
+                case '1':
+                    const valor1 = parseFloat(prompt("Informe um valor:"));
+                    resultado = valor1 > 0 ? "Positivo" : (valor1 < 0 ? "Negativo" : "Zero");
+                    break;
+                case '2':
+                    const valores2 = [
+                        parseFloat(prompt("Informe o primeiro valor:")),
+                        parseFloat(prompt("Informe o segundo valor:")),
+                        parseFloat(prompt("Informe o terceiro valor:"))
+                    ];
+                    resultado = `Maior valor: ${Math.max(...valores2)}`;
+                    break;
+                case '3':
+                    const valores3 = [
+                        parseFloat(prompt("Informe o primeiro valor:")),
+                        parseFloat(prompt("Informe o segundo valor:")),
+                        parseFloat(prompt("Informe o terceiro valor:"))
+                    ];
+                    const maior3 = Math.max(...valores3);
+                    const soma3 = valores3.reduce((acc, val) => acc + val, 0) - maior3;
+                    resultado = `Soma dos 2 maiores: ${soma3}`;
+                    break;
+                case '4':
+                    const valores4 = [];
+                    for (let i = 1; i <= 6; i++) {
+                        valores4.push(parseFloat(prompt(`Informe o valor ${i}:`)));
+                    }
+                    const media4 = valores4.reduce((acc, val) => acc + val, 0) / valores4.length;
+                    resultado = `Média: ${media4}`;
+                    break;
+                case '5':
+                    const valores5 = [];
+                    for (let i = 1; i <= 4; i++) {
+                        valores5.push(parseFloat(prompt(`Informe o valor ${i}:`)));
+                    }
+                    resultado = `Primeiro: ${valores5[0]}, Último: ${valores5[3]}, Maior: ${Math.max(...valores5)}`;
+                    break;
+                case '6':
+                    const numeros6 = [];
+                    for (let i = 1; i <= 6; i++) {
+                        numeros6.push(parseFloat(prompt(`Informe o número ${i}:`)));
+                    }
+                    const soma6 = numeros6.filter(num => num < 72).reduce((acc, val) => acc + val, 0);
+                    resultado = `Soma dos números < 72: ${soma6}`;
+                    break;
+                case '7':
+                    const numeros7 = [];
+                    for (let i = 1; i <= 4; i++) {
+                        const num = parseFloat(prompt(`Informe o número ${i}:`));
+                        if (num > 0 && num < 10) {
+                            numeros7.push(num);
+                        }
+                    }
+                    const media7 = numeros7.length ? (numeros7.reduce((acc, val) => acc + val, 0) / numeros7.length) : 0;
+                    resultado = media7 > 5 ? "Você passou no teste." : "Tente novamente.";
+                    break;
+                case '8':
+                    const anoNascimento = parseInt(prompt("Informe seu ano de nascimento:"));
+                    const anoAtual = new Date().getFullYear();
+                    resultado = (anoAtual - anoNascimento) >= 16 ? "Pode votar." : "Não pode votar.";
+                    break;
+                case '9':
+                    const altura = parseFloat(prompt("Informe sua altura:"));
+                    const genero = parseInt(prompt("Informe seu gênero (1: Feminino, 2: Masculino):"));
+                    const pesoIdeal = genero === 1 ? (61.1 * altura) - 44.7 : (72.7 * altura) - 58;
+                    resultado = `Peso ideal: ${pesoIdeal.toFixed(2)} kg.`;
+                    break;
+                case '10':
+                    const valorCalc1 = parseInt(prompt("Informe o primeiro valor:"));
+                    const valorCalc2 = parseInt(prompt("Informe o segundo valor:"));
+                    const operacao = parseInt(prompt("Informe a operação (1: Adição, 2: Subtração, 3: Divisão, 4: Multiplicação):"));
+                    switch (operacao) {
+                        case 1:
+                            resultado = `Resultado: ${valorCalc1 + valorCalc2}`;
+                            break;
+                        case 2:
+                            resultado = `Resultado: ${valorCalc1 - valorCalc2}`;
+                            break;
+                        case 3:
+                            resultado = `Resultado: ${valorCalc1 / valorCalc2}`;
+                            break;
+                        case 4:
+                            resultado = `Resultado: ${valorCalc1 * valorCalc2}`;
+                            break;
+                        default:
+                            resultado = "Operação inválida.";
+                    }
+                    break;
+                default:
+                    resultado = "Selecione um exercício.";
+            }
+
+            document.getElementById('resultado').innerText = resultado;
+        }
+    </script>
+</body>
+</
